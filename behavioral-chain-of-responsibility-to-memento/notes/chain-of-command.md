@@ -18,9 +18,9 @@ Preferable approach is to pass the logging request down the chain of handlers un
 
 #### Structure
 
-* Handler - implements interface for handling
-* ConcreteHandler - handles a request if able or pass it to next item on the chain
-* Client - initiates the request to a ConcreteHandler on the chain
+*Handler* - implements interface for handling
+*ConcreteHandler* - handles a request if able or pass it to next item on the chain
+*Client* - initiates the request to a ConcreteHandler on the chain
 
 #### Things to notice
 * Requests can be handled by multiple handlers
