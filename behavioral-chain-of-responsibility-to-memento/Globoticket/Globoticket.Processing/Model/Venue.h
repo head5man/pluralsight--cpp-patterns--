@@ -23,6 +23,8 @@ public:
 
 	VenueType getVenueType() { return _venueType; }
 
+  int getNumberOfAvailableSeats(TicketType type);
+
 	int getNumberOfPremiumSeats() { return _numberOfPremiumSeats; }
 	int getNumberOfStallsSeats() { return _numberOfStallsSeats; }
 	int getNumberOfDressCircleSeats() { return _numberOfDressCircleSeats; }

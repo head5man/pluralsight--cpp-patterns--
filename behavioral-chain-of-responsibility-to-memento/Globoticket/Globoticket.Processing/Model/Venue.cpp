@@ -46,6 +46,28 @@ Venue::Venue(VenueType type)
 	}
 }
 
+int Venue::getNumberOfAvailableSeats(TicketType ticketType)
+{
+  int numberOfUnbookedSeats = 0;
+
+  switch (ticketType)
+  {
+  case premium:
+    numberOfUnbookedSeats = _numberOfPremiumSeats - _numberOfBookedPremiumSeats;
+    break;
+  case stalls:
+    numberOfUnbookedSeats = _numberOfStallsSeats - _numberOfBookedStallsSeats;
+    break;
+  case dressCircle:
+    numberOfUnbookedSeats = _numberOfDressCircleSeats - _numberOfBookedDressCircleSeats;
+    break;
+  default:
+    std::cout << fmt::format("The {0} ticket type is not currently supported.", ticketType);
+    return 0;
+  }
+  return numberOfUnbookedSeats;
+}
+
 int Venue::BookSeats(int numberOfSeatsToBook, TicketType ticketType)
 {
 	int numberOfUnbookedSeats = 0;
@@ -78,6 +100,7 @@ int Venue::BookSeats(int numberOfSeatsToBook, TicketType ticketType)
 		return seatsLeftAfterBooking;
 	}
 
-	std::cout << NotEnoughSeatsAvailable(ticketType, numberOfUnbookedSeats);
-	return -1;
+	std::string error = NotEnoughSeatsAvailable(ticketType, numberOfUnbookedSeats);
+  std::cout << error;
+  throw std::runtime_error(error);
 }

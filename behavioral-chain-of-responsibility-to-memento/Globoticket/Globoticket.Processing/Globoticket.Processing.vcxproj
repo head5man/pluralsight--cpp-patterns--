@@ -140,6 +140,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Commands\BookVenueCommand.cpp" />
+    <ClCompile Include="Commands\ReserveTicketCommand.cpp" />
     <ClCompile Include="Handlers\DressCirclePriceHandler.cpp" />
     <ClCompile Include="Handlers\PriceHandler.cpp" />
     <ClCompile Include="Handlers\PriceReceiver.cpp" />
@@ -151,7 +153,10 @@
     <ClCompile Include="Model\Venue.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Commands\BookVenueCommand.h" />
+    <ClInclude Include="Commands\ReserveTicketCommand.h" />
     <ClInclude Include="Handlers\DressCirclePriceHandler.h" />
+    <ClInclude Include="Commands\Command.h" />
     <ClInclude Include="Model\TicketManager.h" />
     <ClInclude Include="Model\Venue.h" />
     <ClInclude Include="Model\VenueType.h" />
