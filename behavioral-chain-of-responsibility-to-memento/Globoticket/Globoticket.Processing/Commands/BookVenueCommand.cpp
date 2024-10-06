@@ -1,8 +1,12 @@
 #include "BookVenueCommand.h"
+#include <iostream>
 
-void BookVenueCommand::Execute()
+bool BookVenueCommand::Execute()
 {
-  _numberOfRemainingSeats = _venue->BookSeats(_numberOfSeatsToBook, _ticketType);
+  bool canExecute = CanExecute();
+  if (canExecute)
+    _numberOfRemainingSeats = _venue->BookSeats(_numberOfSeatsToBook, _ticketType);
+  return canExecute;
 }
 
 bool BookVenueCommand::CanExecute()
@@ -12,6 +16,18 @@ bool BookVenueCommand::CanExecute()
 }
 
 BookVenueCommand::BookVenueCommand(Venue* venue, int numberOfSeatsToBook, TicketType ticketType)
-  : _venue(venue), _numberOfSeatsToBook(numberOfSeatsToBook), _ticketType(ticketType)
 {
+  try
+  {
+    //venue->ThrowIfNotEnoughSeatsAvailable(ticketType, numberOfSeatsToBook);
+    _venue = venue;
+    _numberOfSeatsToBook = numberOfSeatsToBook;
+    _ticketType = ticketType;
+    _numberOfRemainingSeats = _venue->getNumberOfAvailableSeats(_ticketType);
+  }
+  catch (std::runtime_error& e)
+  {
+    std::cout << "Constructing BookVenueCommand failed\n";
+    throw;
+  }
 }

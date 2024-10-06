@@ -4,13 +4,8 @@
 
 std::string Venue::NotEnoughSeatsAvailable(TicketType ticketType, int unbookedSeats)
 {
-	const char* ticketType_str[] =
-	{ "Premium", "Stalls", "Dress Circle" };
-	const char* venueType_str[] =
-	{ "Huge", "Large", "Small" };
-
 	return fmt::format("The {0} venue does not have enough seats available for this reservation. "
-		"Only {1} {2} seats are left.\n ", venueType_str[_venueType - 1], unbookedSeats, ticketType_str[ticketType-1]);
+		"Only {1} {2} seats are left.\n ", to_string(_venueType), unbookedSeats, to_string(ticketType));
 }
 
 Venue::Venue(VenueType type)
@@ -68,6 +63,16 @@ int Venue::getNumberOfAvailableSeats(TicketType ticketType)
   return numberOfUnbookedSeats;
 }
 
+void Venue::ThrowIfNotEnoughSeatsAvailable(TicketType ticketType, int numberOfSeatsToBook)
+{
+  int numberOfUnbookedSeats = getNumberOfAvailableSeats(ticketType);
+  if (numberOfSeatsToBook > numberOfUnbookedSeats)
+  {
+    std::string error = NotEnoughSeatsAvailable(ticketType, numberOfUnbookedSeats);
+    throw std::runtime_error(error);
+  }
+}
+
 int Venue::BookSeats(int numberOfSeatsToBook, TicketType ticketType)
 {
 	int numberOfUnbookedSeats = 0;
@@ -92,15 +97,8 @@ int Venue::BookSeats(int numberOfSeatsToBook, TicketType ticketType)
 		return 0;
 	}
 
-	int seatsLeftAfterBooking = numberOfUnbookedSeats - numberOfSeatsToBook;
+  ThrowIfNotEnoughSeatsAvailable(ticketType, numberOfSeatsToBook);
 
-	if (seatsLeftAfterBooking >= 0)
-	{
-		(*numberOfBookedSeats) += numberOfSeatsToBook;
-		return seatsLeftAfterBooking;
-	}
-
-	std::string error = NotEnoughSeatsAvailable(ticketType, numberOfUnbookedSeats);
-  std::cout << error;
-  throw std::runtime_error(error);
+  (*numberOfBookedSeats) += numberOfSeatsToBook;
+  return numberOfUnbookedSeats - numberOfSeatsToBook;
 }

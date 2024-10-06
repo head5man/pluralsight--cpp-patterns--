@@ -17,6 +17,6 @@ private:
   int _numberOfSeatsToBook;
 public:
   ReserveTicketCommand(std::vector<Ticket>* tickets, PriceHandler* priceHandler, TicketType ticketType, VenueType venueType, int numberOfSeatsToBook);
-  virtual void Execute() override;
+  virtual bool Execute() override;
 };
 

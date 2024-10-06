@@ -7,10 +7,13 @@ class BookVenueCommand :
 {
 private:
   Venue* _venue;
-  int _numberOfSeatsToBook, _numberOfRemainingSeats;
+  int _numberOfSeatsToBook;
+  int _numberOfRemainingSeats;
   TicketType _ticketType;
+  BookVenueCommand() = delete;
+  BookVenueCommand(const BookVenueCommand&&) = delete;
 public:
-  virtual void Execute() override;
+  virtual bool Execute() override;
   virtual bool CanExecute() override;
   BookVenueCommand(Venue* venue, int numberOfSeatsToBook, TicketType ticketType);
   int GetNumberOfRemainingSeats() { return _numberOfRemainingSeats; }

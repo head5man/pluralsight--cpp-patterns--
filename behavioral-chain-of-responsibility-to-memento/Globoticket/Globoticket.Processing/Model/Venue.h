@@ -25,6 +25,8 @@ public:
 
   int getNumberOfAvailableSeats(TicketType type);
 
+  void ThrowIfNotEnoughSeatsAvailable(TicketType type, int numberOfSeatsToBook);
+
 	int getNumberOfPremiumSeats() { return _numberOfPremiumSeats; }
 	int getNumberOfStallsSeats() { return _numberOfStallsSeats; }
 	int getNumberOfDressCircleSeats() { return _numberOfDressCircleSeats; }

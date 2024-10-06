@@ -3,6 +3,6 @@
 class Command
 {
 public:
-  virtual void Execute() = 0;
+  virtual bool Execute() = 0;
   virtual bool CanExecute() { return true; };
 };
