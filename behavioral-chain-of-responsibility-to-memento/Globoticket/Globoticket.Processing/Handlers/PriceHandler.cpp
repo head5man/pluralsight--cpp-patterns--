@@ -7,7 +7,7 @@ PriceHandler* PriceHandler::SetNext(PriceReceiver* receiver)
   return this;
 }
 
-double PriceHandler::HandlePrice(Ticket ticket)
+double PriceHandler::HandlePrice(const Ticket& ticket)
 {
   for (auto receiver : _receivers)
   {
@@ -19,13 +19,13 @@ double PriceHandler::HandlePrice(Ticket ticket)
   return NULL;
 }
 
-double PriceHandler::HandleTotalPrice(std::vector<Ticket> tickets)
+double PriceHandler::HandleTotalPrice(const std::vector<std::shared_ptr<Ticket>>& tickets)
 {
   double totalPrice = 0;
 
-  for (Ticket ticket : tickets)
+  for (auto const& ticket : tickets)
   {
-    totalPrice += HandlePrice(ticket);
+    totalPrice += HandlePrice(*ticket);
   }
   return totalPrice;
 }

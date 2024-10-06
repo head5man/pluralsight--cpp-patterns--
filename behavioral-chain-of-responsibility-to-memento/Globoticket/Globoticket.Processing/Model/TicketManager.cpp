@@ -67,16 +67,19 @@ void TicketManager::BookSeats()
 
   try
   {
-    MacroCommand command;
+    auto command = std::make_unique<MacroCommand>();
     Venue* venue = getVenueByVenueType(venueType);
-    BookVenueCommand bookVenueCommand(venue, numberOfSeatsToBook, ticketType);
-    ReserveTicketCommand reserveTicketCommand(&_tickets, _priceHandler, ticketType, venueType, numberOfSeatsToBook);
-    command.Add(&bookVenueCommand);
-    command.Add(&reserveTicketCommand);
-    if (command.Execute() == false)
+    auto book = std::make_unique<BookVenueCommand>(venue, numberOfSeatsToBook, ticketType);
+    auto reserve = std::make_unique<ReserveTicketCommand>(_tickets, _priceHandler, ticketType, venueType, numberOfSeatsToBook);
+    command->Add(std::move(book));
+    command->Add(std::move(reserve));
+
+    if (command->Execute() == false)
     {
       std::cout << "No tickets booked\n";
+      return;
     }
+    _commands.push(std::move(command));
   }
   catch (std::runtime_error& e)
   {
@@ -102,9 +105,9 @@ void TicketManager::HandleTotalPrice()
 {
 	double totalPrice = _priceHandler->HandleTotalPrice(_tickets);
 	int totalNumberOfSeats = 0;
-	for (Ticket ticket : _tickets)
+	for (auto const& ticket : _tickets)
 	{
-		totalNumberOfSeats += ticket.getNumberOfSeats();
+		totalNumberOfSeats += ticket->getNumberOfSeats();
 	}
 
 	std::cout << fmt::format("You reserved a total {0} tickets for {1} seats "
@@ -117,7 +120,25 @@ void TicketManager::HandleTotalPrice()
 void TicketManager::ClearTickets()
 {
 	_tickets.clear();
+  while (_commands.size() > 0)
+  {
+    auto cmd = std::move(_commands.top());
+    _commands.pop();
+  }
 	std:: cout << "All ticket reservations have been cleared.\n";
+}
+
+void TicketManager::UndoReservation()
+{
+  if (_commands.empty())
+  {
+    std::cout << "No reservation(s) to undo.\n";
+    return;
+  }
+
+  auto command = std::move(_commands.top());
+  _commands.pop();
+  command->Undo();
 }
 
 void TicketManager::TakeInteger(int& integer)

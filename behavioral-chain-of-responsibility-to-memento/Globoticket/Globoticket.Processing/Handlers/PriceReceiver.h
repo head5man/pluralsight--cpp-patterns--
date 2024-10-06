@@ -6,5 +6,5 @@ class PriceReceiver
 protected:
   double _basePrice = 30.0;
 public:
-  virtual double HandlePrice(Ticket ticket) = 0;
+  virtual double HandlePrice(const Ticket& ticket) = 0;
 };

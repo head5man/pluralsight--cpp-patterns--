@@ -9,21 +9,46 @@ bool ReserveTicketCommand::Execute()
   bool canExecute = CanExecute();
   if (canExecute)
   {
-    Ticket ticket(_ticketType, _venueType, _numberOfSeatsToBook);
-
-    double ticketPrice = _priceHandler->HandlePrice(ticket);
-
-    _tickets->push_back(ticket);
+    _ticket = std::make_shared<Ticket>(_ticketType, _venueType, _numberOfSeatsToBook);
+    
+    double ticketPrice = _priceHandler->HandlePrice(*_ticket);
 
     std::cout << fmt::format("You reserved a ticket for {0} seats "
       "at the {1} venue in the {2} area which costs {3} dollars. \n",
-      ticket.getNumberOfSeats(), to_string(ticket.getVenueType()), to_string(ticket.getTicketType()),
+      _ticket->getNumberOfSeats(), to_string(_ticket->getVenueType()), to_string(_ticket->getTicketType()),
       ticketPrice);
+    _tickets.push_back(_ticket);
   }
   return canExecute;
 }
 
-ReserveTicketCommand::ReserveTicketCommand(std::vector<Ticket>* tickets, PriceHandler* priceHandler, TicketType ticketType, VenueType venueType, int numberOfSeatsToBook)
+void ReserveTicketCommand::Undo()
+{
+  if (_ticket == nullptr)
+  {
+    Command::Undo();
+    return;
+  }
+  
+  double ticketPrice = _priceHandler->HandlePrice(*_ticket);
+
+  // delete last ticket
+  _tickets.pop_back();
+
+  std::cout << fmt::format("You undid reserved a ticket for {0} seats "
+    "at the {1} venue in the {2} area which costs {3} dollars. \n",
+    _ticket->getNumberOfSeats(), to_string(_ticket->getVenueType()), to_string(_ticket->getTicketType()),
+    ticketPrice);
+  _ticket.reset();
+}
+
+ReserveTicketCommand::~ReserveTicketCommand()
+{
+  if (_ticket)
+    _ticket.reset();
+}
+
+ReserveTicketCommand::ReserveTicketCommand(std::vector<std::shared_ptr<Ticket>>& tickets, PriceHandler* priceHandler, TicketType ticketType, VenueType venueType, int numberOfSeatsToBook)
   : Command(),
   _tickets(tickets),
   _priceHandler(priceHandler),

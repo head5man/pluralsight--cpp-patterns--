@@ -25,7 +25,10 @@ public:
 
   int getNumberOfAvailableSeats(TicketType type);
 
+  int getNumberOfBookedSeats(TicketType type);
+
   void ThrowIfNotEnoughSeatsAvailable(TicketType type, int numberOfSeatsToBook);
+  void ThrowIfNotEnoughSeatsToUnbook(TicketType type, int numberOfSeats);
 
 	int getNumberOfPremiumSeats() { return _numberOfPremiumSeats; }
 	int getNumberOfStallsSeats() { return _numberOfStallsSeats; }
@@ -38,5 +41,7 @@ public:
 	/// <param name="ticketType">The type of seats to book.</param>
 	/// <returns>The number of seats of the specified type still remaining.</returns>
 	int BookSeats(int numberOfSeatToBook, TicketType ticketType);
+
+  int UnbookSeats(int numberOfSeats, TicketType ticketType);
 };
 

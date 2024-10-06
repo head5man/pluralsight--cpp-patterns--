@@ -8,15 +8,14 @@ class MacroCommand :
     public Command
 {
 private:
-  std::unique_ptr<std::list<Command*>> _commands;
+  std::list<std::unique_ptr<Command>> _commands;
   MacroCommand(const MacroCommand&&) = delete;
 public:
-  MacroCommand() : _commands(std::make_unique<std::list<Command*>>()) {};
+  MacroCommand() : _commands(std::list<std::unique_ptr<Command>>()) {};
 
-  virtual void Add(Command* command);
-  virtual void Remove(Command* command);
-
+  virtual void Add(std::unique_ptr<Command> command);
   virtual bool Execute() override;
+  virtual void Undo() override;
   virtual bool CanExecute() override;
 };
 

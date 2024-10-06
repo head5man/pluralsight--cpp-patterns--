@@ -1,11 +1,18 @@
 #pragma once
-#include <vector>
+
 #include "Venue.h"
 #include "../Handlers/PriceHandler.h"
+#include "../Commands/Command.h"
+
+#include <vector>
+#include <stack>
+#include <memory>
+
 class TicketManager
 {
 private:
-	std::vector<Ticket> _tickets;
+	std::vector<std::shared_ptr<Ticket>> _tickets;
+  std::stack<std::unique_ptr<Command>> _commands;
 	PriceHandler* _priceHandler;
 	Venue* _hugeTheatre;
 	Venue* _largeTheatre;
@@ -17,5 +24,6 @@ public:
 	void BookSeats();
 	void HandleTotalPrice();
 	void ClearTickets();
+  void UndoReservation();
 };
 

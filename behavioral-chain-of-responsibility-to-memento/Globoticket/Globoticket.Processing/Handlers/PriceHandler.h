@@ -11,7 +11,7 @@ private:
 public:
   virtual PriceHandler* SetNext(PriceReceiver* receiver);
 
-  double HandlePrice(Ticket ticket);
-  double HandleTotalPrice(std::vector<Ticket> tickets);
+  double HandlePrice(const Ticket& ticket);
+  double HandleTotalPrice(const std::vector<std::shared_ptr<Ticket>>& tickets);
 };
 

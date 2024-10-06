@@ -8,12 +8,14 @@ private:
 	TicketType _ticketType;
 	VenueType _venueType;
 	int _numberOfSeats;
-
+protected:
+  static int count;
 public:
+  ~Ticket();
 	Ticket(TicketType type, VenueType venueType, int numberOfSeats);
 
-	TicketType getTicketType() { return _ticketType; }
-	VenueType getVenueType() { return _venueType; }
-	int getNumberOfSeats() { return _numberOfSeats; }
+	TicketType getTicketType() const { return _ticketType; }
+	VenueType getVenueType() const { return _venueType; }
+	int getNumberOfSeats() const { return _numberOfSeats; }
 };
 

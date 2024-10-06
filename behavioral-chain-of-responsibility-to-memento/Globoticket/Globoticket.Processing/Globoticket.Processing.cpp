@@ -28,6 +28,7 @@ void SystemMenu()
 		cout << fmt::format("1: Make ticket reservation\n");
 		cout << fmt::format("2: Calculate total price of current tickets\n");
 		cout << fmt::format("3: Clear ticket list\n");
+    cout << fmt::format("U: Undo last reservation\n");
 		cout << fmt::format("Q: Quit\n");
 		cin >> selection;
 
@@ -48,6 +49,12 @@ void SystemMenu()
 			_ticketManager->ClearTickets();
 			break;
 		}
+    case 'U':
+    case 'u':
+    {
+      _ticketManager->UndoReservation();
+      break;
+    }
 		default:
 			cout << "Please make a valid selection.\n";
 			break;

@@ -63,6 +63,25 @@ int Venue::getNumberOfAvailableSeats(TicketType ticketType)
   return numberOfUnbookedSeats;
 }
 
+int Venue::getNumberOfBookedSeats(TicketType type)
+{
+  switch (type)
+  {
+  case premium:
+    return _numberOfBookedPremiumSeats;
+    break;
+  case stalls:
+    return _numberOfBookedStallsSeats;
+    break;
+  case dressCircle:
+    return _numberOfBookedDressCircleSeats;
+    break;
+  default:
+    std::cout << fmt::format("The {0} ticket type is not currently supported.", type);
+    return 0;
+  }
+}
+
 void Venue::ThrowIfNotEnoughSeatsAvailable(TicketType ticketType, int numberOfSeatsToBook)
 {
   int numberOfUnbookedSeats = getNumberOfAvailableSeats(ticketType);
@@ -71,6 +90,43 @@ void Venue::ThrowIfNotEnoughSeatsAvailable(TicketType ticketType, int numberOfSe
     std::string error = NotEnoughSeatsAvailable(ticketType, numberOfUnbookedSeats);
     throw std::runtime_error(error);
   }
+}
+
+void Venue::ThrowIfNotEnoughSeatsToUnbook(TicketType type, int numberOfSeats)
+{
+
+  int bookedSeats = getNumberOfBookedSeats(type);
+  if (numberOfSeats > bookedSeats)
+  {
+    std::string error = NotEnoughSeatsAvailable(type, bookedSeats);
+    throw std::runtime_error(error);
+  }
+}
+
+int Venue::UnbookSeats(int numberOfSeats, TicketType type)
+{
+  ThrowIfNotEnoughSeatsToUnbook(type, numberOfSeats);
+  int* bookedPtr = nullptr;
+
+  switch (type)
+  {
+  case premium:
+    bookedPtr = &_numberOfBookedPremiumSeats;
+    break;
+  case stalls:
+    bookedPtr = &_numberOfBookedStallsSeats;
+    break;
+  case dressCircle:
+    bookedPtr = &_numberOfBookedDressCircleSeats;
+    break;
+  default:
+    std::cout << fmt::format("The {0} ticket type is not currently supported.", type);
+    return 0;
+  }
+
+  (*bookedPtr) -= numberOfSeats;
+
+  return getNumberOfAvailableSeats(type);
 }
 
 int Venue::BookSeats(int numberOfSeatsToBook, TicketType ticketType)

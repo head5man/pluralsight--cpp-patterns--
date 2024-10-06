@@ -5,6 +5,6 @@ class PremiumPriceHandler :
     public PriceReceiver
 {
 public:
-  virtual double HandlePrice(Ticket ticket) override;
+  virtual double HandlePrice(const Ticket& ticket) override;
 };
 

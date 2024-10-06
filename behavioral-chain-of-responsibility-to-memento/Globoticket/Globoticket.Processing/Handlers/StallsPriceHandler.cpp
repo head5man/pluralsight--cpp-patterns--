@@ -1,7 +1,7 @@
 #include "StallsPriceHandler.h"
 #include <cstddef>
 
-double StallsPriceHandler::HandlePrice(Ticket ticket)
+double StallsPriceHandler::HandlePrice(const Ticket& ticket)
 {
     if (ticket.getTicketType() == TicketType::stalls)
     {

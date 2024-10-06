@@ -1,7 +1,7 @@
 #include "DressCirclePriceHandler.h"
 #include <cstddef>
 
-double DressCirclePriceHandler::HandlePrice(Ticket ticket)
+double DressCirclePriceHandler::HandlePrice(const Ticket& ticket)
 {
     if (ticket.getTicketType() == TicketType::dressCircle)
     {
