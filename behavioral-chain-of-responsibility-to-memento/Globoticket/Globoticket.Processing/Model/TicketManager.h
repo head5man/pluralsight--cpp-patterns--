@@ -11,7 +11,7 @@ private:
 	Venue* _largeTheatre;
 	Venue* _smallTheatre;
 	void TakeInteger(int& integer);
-
+  Venue* getVenueByVenueType(VenueType venueType);
 public:
 	TicketManager();
 	void BookSeats();

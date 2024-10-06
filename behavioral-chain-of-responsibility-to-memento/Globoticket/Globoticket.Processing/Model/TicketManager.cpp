@@ -7,6 +7,7 @@
 #include "../Commands/ReserveTicketCommand.h"
 #include <iostream>
 #include <fmt/core.h>
+#include "../Commands/MacroCommand.h"
 
 TicketManager::TicketManager()
 {
@@ -29,11 +30,6 @@ TicketManager::TicketManager()
 
 void TicketManager::BookSeats()
 {
-	const char* ticketType_str[] =
-	{ "Premium", "Stalls", "Dress Circle" };
-	const char* venueType_str[] =
-	{ "Huge", "Large", "Small" };
-
 	int numberOfSeatsToBook;
 	std::cout << fmt::format("How many seats would you like to reserve?\n");
 
@@ -67,40 +63,39 @@ void TicketManager::BookSeats()
 
 	TicketType ticketType = (TicketType)typeOfTicketInt;
 	VenueType venueType = (VenueType)typeOfVenueInt;
-
 	int numberOfRemainingSeats = 0;
-  std::unique_ptr<BookVenueCommand> bookCommand = nullptr;
-	switch (venueType)
-	{
-	case huge:
-    bookCommand = std::make_unique<BookVenueCommand>(_hugeTheatre, numberOfSeatsToBook, ticketType);
-		break;
-	case large:
-    bookCommand = std::make_unique<BookVenueCommand>(_largeTheatre, numberOfSeatsToBook, ticketType);
-		break;
-	case small:
-    bookCommand = std::make_unique<BookVenueCommand>(_smallTheatre, numberOfSeatsToBook, ticketType);
-		break;
-	default:
-		break;
-	}
 
   try
   {
-    if (bookCommand) // && bookCommand->CanExecute())
+    MacroCommand command;
+    Venue* venue = getVenueByVenueType(venueType);
+    BookVenueCommand bookVenueCommand(venue, numberOfSeatsToBook, ticketType);
+    ReserveTicketCommand reserveTicketCommand(&_tickets, _priceHandler, ticketType, venueType, numberOfSeatsToBook);
+    command.Add(&bookVenueCommand);
+    command.Add(&reserveTicketCommand);
+    if (command.Execute() == false)
     {
-      bookCommand->Execute();
-      ReserveTicketCommand reserve(&_tickets, _priceHandler, ticketType, venueType, numberOfSeatsToBook);
-      reserve.Execute();
-    }
-    else
-    {
-      std::cout << "No seats reserved.\n ";
+      std::cout << "No tickets booked\n";
     }
   }
   catch (std::runtime_error& e)
   {
+    std::cout << e.what() << "No tickets booked\n";
   }
+}
+
+Venue* TicketManager::getVenueByVenueType(VenueType venueType)
+{
+  switch (venueType)
+  {
+  case small:
+    return _smallTheatre;
+  case large:
+    return _largeTheatre;
+  case huge:
+    return _hugeTheatre;
+  }
+  throw std::runtime_error("Selected venue not currently available");
 }
 
 void TicketManager::HandleTotalPrice()
