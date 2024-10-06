@@ -146,6 +146,7 @@
     <ClCompile Include="Handlers\PriceHandler.cpp" />
     <ClCompile Include="Handlers\PriceReceiver.cpp" />
     <ClCompile Include="Handlers\StallsPriceHandler.cpp" />
+    <ClCompile Include="Commands\MacroCommand.cpp" />
     <ClCompile Include="Model\Ticket.cpp" />
     <ClCompile Include="Handlers\PremiumPriceHandler.cpp" />
     <ClCompile Include="Globoticket.Processing.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Commands\ReserveTicketCommand.h" />
     <ClInclude Include="Handlers\DressCirclePriceHandler.h" />
     <ClInclude Include="Commands\Command.h" />
+    <ClInclude Include="Commands\MacroCommand.h" />
     <ClInclude Include="Model\TicketManager.h" />
     <ClInclude Include="Model\Venue.h" />
     <ClInclude Include="Model\VenueType.h" />
