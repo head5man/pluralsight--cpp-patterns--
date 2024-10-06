@@ -3,6 +3,8 @@
 #include "../Handlers/PremiumPriceHandler.h"
 #include "../Handlers/DressCirclePriceHandler.h"
 #include "../Handlers/StallsPriceHandler.h"
+#include "../Commands/BookVenueCommand.h"
+#include "../Commands/ReserveTicketCommand.h"
 #include <iostream>
 #include <fmt/core.h>
 
@@ -67,41 +69,38 @@ void TicketManager::BookSeats()
 	VenueType venueType = (VenueType)typeOfVenueInt;
 
 	int numberOfRemainingSeats = 0;
-
+  std::unique_ptr<BookVenueCommand> bookCommand = nullptr;
 	switch (venueType)
 	{
 	case huge:
-		numberOfRemainingSeats = _hugeTheatre->BookSeats(numberOfSeatsToBook, ticketType);
+    bookCommand = std::make_unique<BookVenueCommand>(_hugeTheatre, numberOfSeatsToBook, ticketType);
 		break;
 	case large:
-		numberOfRemainingSeats = _largeTheatre->BookSeats(numberOfSeatsToBook, ticketType);
+    bookCommand = std::make_unique<BookVenueCommand>(_largeTheatre, numberOfSeatsToBook, ticketType);
 		break;
 	case small:
-		numberOfRemainingSeats = _smallTheatre->BookSeats(numberOfSeatsToBook, ticketType);
+    bookCommand = std::make_unique<BookVenueCommand>(_smallTheatre, numberOfSeatsToBook, ticketType);
 		break;
 	default:
 		break;
 	}
 
-	if (numberOfRemainingSeats >= 0)
-	{
-		Ticket ticket(ticketType, venueType, numberOfSeatsToBook);
-
-		double ticketPrice = _priceHandler->HandlePrice(ticket);
-
-		_tickets.push_back(ticket);
-
-		std::cout << fmt::format("You reserved a ticket for {0} seats "
-			"at the {1} venue in the {2} area which costs {3} dollars. \n",
-			ticket.getNumberOfSeats(),
-			venueType_str[ticket.getVenueType() - 1],
-			ticketType_str[ticket.getTicketType() - 1],
-			ticketPrice);
-	}
-	else
-	{
-		std::cout << "No seats reserved.\n ";
-	}
+  try
+  {
+    if (bookCommand) // && bookCommand->CanExecute())
+    {
+      bookCommand->Execute();
+      ReserveTicketCommand reserve(&_tickets, _priceHandler, ticketType, venueType, numberOfSeatsToBook);
+      reserve.Execute();
+    }
+    else
+    {
+      std::cout << "No seats reserved.\n ";
+    }
+  }
+  catch (std::runtime_error& e)
+  {
+  }
 }
 
 void TicketManager::HandleTotalPrice()
