@@ -154,8 +154,12 @@
     <ClCompile Include="Model\Venue.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Expressions\Context.h" />
+    <ClInclude Include="Expressions\AbstractExpression.h" />
     <ClInclude Include="Commands\BookVenueCommand.h" />
     <ClInclude Include="Commands\ReserveTicketCommand.h" />
+    <ClInclude Include="Expressions\EnumType.h" />
+    <ClInclude Include="Expressions\ExpressionType.h" />
     <ClInclude Include="Handlers\DressCirclePriceHandler.h" />
     <ClInclude Include="Commands\Command.h" />
     <ClInclude Include="Commands\MacroCommand.h" />
