@@ -2,7 +2,7 @@
 #### Command pattern
 
 #### Gang of four quote
-"Encapsulate arequest as an object thereby letting you parameterize clients different requests, queue or log requests and support undoable operations."
+>Encapsulate a request as an object thereby letting you parameterize clients different requests, queue or log requests and support undoable operations.
 
 #### Structure
 *Command* - Declares an interface for executing an operation

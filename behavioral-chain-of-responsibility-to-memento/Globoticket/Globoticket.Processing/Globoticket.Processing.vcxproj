@@ -172,6 +172,9 @@
     <ClInclude Include="Handlers\PriceHandler.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\notes\notes-chain-of-command.md" />
+    <None Include="..\..\notes\notes-command-pattern.md" />
+    <None Include="..\..\notes\notes-interpreter-pattern.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
