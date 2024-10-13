@@ -140,6 +140,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Expressions\ActionExpression.cpp" />
+    <ClCompile Include="Expressions\BookingExpression.cpp" />
     <ClCompile Include="Commands\BookVenueCommand.cpp" />
     <ClCompile Include="Commands\ReserveTicketCommand.cpp" />
     <ClCompile Include="Handlers\DressCirclePriceHandler.cpp" />
@@ -154,7 +156,10 @@
     <ClCompile Include="Model\Venue.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Expressions\ActionExpression.h" />
+    <ClInclude Include="Expressions\ActionType.h" />
     <ClInclude Include="Expressions\Context.h" />
+    <ClInclude Include="Expressions\BookingExpression.h" />
     <ClInclude Include="Expressions\AbstractExpression.h" />
     <ClInclude Include="Commands\BookVenueCommand.h" />
     <ClInclude Include="Commands\ReserveTicketCommand.h" />
