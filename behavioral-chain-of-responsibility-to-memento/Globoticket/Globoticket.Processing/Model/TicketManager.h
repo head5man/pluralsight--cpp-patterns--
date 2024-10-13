@@ -18,11 +18,13 @@ private:
 	Venue* _largeTheatre;
 	Venue* _smallTheatre;
 	void TakeInteger(int& integer);
+  void TakeExpression(std::string& expression);
   Venue* getVenueByVenueType(VenueType venueType);
 public:
 	TicketManager();
 	void BookSeats();
 	void HandleTotalPrice();
+  void HandleFreeText();
 	void ClearTickets();
   void UndoReservation();
 };

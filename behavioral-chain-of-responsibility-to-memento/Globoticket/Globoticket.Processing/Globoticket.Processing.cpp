@@ -21,17 +21,8 @@ void SystemMenu()
 {
 	char selection = ' ';
 
-	while (selection != 'q' && selection != 'Q')
+	do
 	{
-		cout << fmt::format("Welcome to the Globoticket system\n");
-		cout << fmt::format("Please make a selection\n");
-		cout << fmt::format("1: Make ticket reservation\n");
-		cout << fmt::format("2: Calculate total price of current tickets\n");
-		cout << fmt::format("3: Clear ticket list\n");
-    cout << fmt::format("U: Undo last reservation\n");
-		cout << fmt::format("Q: Quit\n");
-		cin >> selection;
-
 		switch (selection)
 		{
 		case '1':
@@ -39,25 +30,52 @@ void SystemMenu()
 			_ticketManager->BookSeats();
 			break;
 		}
-		case '2':
+    case '5':
+      _ticketManager->HandleFreeText();
+      break;
+		case 't':
 		{
 			_ticketManager->HandleTotalPrice();
 			break;
 		}
-		case '3':
+		case 'c':
 		{
 			_ticketManager->ClearTickets();
 			break;
 		}
-    case 'U':
     case 'u':
     {
       _ticketManager->UndoReservation();
       break;
     }
+    case -1:
+    case ' ':
+      cout << fmt::format("Welcome to the Globoticket system\n");
+      cout << fmt::format("Please make a selection\n");
+      cout << fmt::format("1: Make ticket reservation\n");
+      cout << fmt::format("5: Reserve ticket expression\n");
+      cout << fmt::format("T: Calculate total price of current tickets\n");
+      cout << fmt::format("C: Clear ticket list\n");
+      cout << fmt::format("U: Undo last reservation\n");
+      cout << fmt::format("Q: Quit\n");
+      break;
+    case 'q':
+      break;
 		default:
 			cout << "Please make a valid selection.\n";
 			break;
 		}
-	}
+  } while (GetSelection(selection) && selection != 'q');
+}
+
+char GetSelection(char& c)
+{
+  c = 0;
+  std::string selection;
+  if (std::getline(cin, selection))
+  {
+    c = selection.c_str()[0];
+    c = std::iscntrl(c) ? -1 : std::tolower(c);
+  }
+  return c;
 }

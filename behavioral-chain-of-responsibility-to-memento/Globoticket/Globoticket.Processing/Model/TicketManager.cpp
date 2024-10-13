@@ -117,6 +117,14 @@ void TicketManager::HandleTotalPrice()
 		totalPrice);
 }
 
+void TicketManager::HandleFreeText()
+{
+  std::cout << "Enter expression - {action} {number} {venue} {ticket type}\n";
+  std::string expression;
+  TakeExpression(expression);
+  std::cout << "<- " << expression << std::endl;
+}
+
 void TicketManager::ClearTickets()
 {
 	_tickets.clear();
@@ -157,4 +165,9 @@ void TicketManager::TakeInteger(int& integer)
 		}
 		else break;
 	}
+}
+
+void TicketManager::TakeExpression(std::string& expression)
+{
+  std::getline(std::cin, expression);
 }
