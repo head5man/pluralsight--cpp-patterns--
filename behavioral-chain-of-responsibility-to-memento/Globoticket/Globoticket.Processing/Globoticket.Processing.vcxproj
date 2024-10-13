@@ -144,6 +144,9 @@
     <ClCompile Include="Expressions\BookingExpression.cpp" />
     <ClCompile Include="Commands\BookVenueCommand.cpp" />
     <ClCompile Include="Commands\ReserveTicketCommand.cpp" />
+    <ClCompile Include="Expressions\SeatsExpression.cpp" />
+    <ClCompile Include="Expressions\TicketExpression.cpp" />
+    <ClCompile Include="Expressions\VenueExpression.cpp" />
     <ClCompile Include="Handlers\DressCirclePriceHandler.cpp" />
     <ClCompile Include="Handlers\PriceHandler.cpp" />
     <ClCompile Include="Handlers\PriceReceiver.cpp" />
@@ -165,6 +168,9 @@
     <ClInclude Include="Commands\ReserveTicketCommand.h" />
     <ClInclude Include="Expressions\EnumType.h" />
     <ClInclude Include="Expressions\ExpressionType.h" />
+    <ClInclude Include="Expressions\SeatsExpression.h" />
+    <ClInclude Include="Expressions\TicketExpression.h" />
+    <ClInclude Include="Expressions\VenueExpression.h" />
     <ClInclude Include="Handlers\DressCirclePriceHandler.h" />
     <ClInclude Include="Commands\Command.h" />
     <ClInclude Include="Commands\MacroCommand.h" />
