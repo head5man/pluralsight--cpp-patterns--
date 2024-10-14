@@ -121,10 +121,32 @@ void TicketManager::HandleTotalPrice()
 
 void TicketManager::HandleFreeText()
 {
-  std::cout << "Enter expression - {action} {number} {venue} {ticket type}\n";
-  std::string expression;
-  TakeExpression(expression);
-  std::cout << "<- " << expression << std::endl;
+  try
+  {
+    std::cout << "Enter expression - {action} {number} {venue} {ticket type}\n";
+    std::string expression;
+    TakeExpression(expression);
+    std::cout << "<- " << expression << std::endl;
+    auto expressionTree = Lex(expression, std::make_shared<Ticket>());
+    if (expressionTree.empty())
+      return;
+    Context<int> context;
+    Parse(expressionTree, context);
+
+    auto action = expressionTree.front();
+    auto ticket = action->Interpret(context);
+    ActionType actionType = action->GetValue();
+
+    if (actionType == ActionType::Reserve)
+    {
+      _tickets.push_back(ticket);
+      DisplayTicketInformation(ticket);
+    }
+  }
+  catch (std::runtime_error& e)
+  {
+    std::cout << e.what() << "\n";
+  }
 }
 
 void TicketManager::ClearTickets()
@@ -268,4 +290,12 @@ void TicketManager::TakeInteger(int& integer)
 void TicketManager::TakeExpression(std::string& expression)
 {
   std::getline(std::cin, expression);
+}
+
+void TicketManager::DisplayTicketInformation(std::shared_ptr<Ticket> ticket)
+{
+  double ticketPrice = _priceHandler->HandlePrice(*ticket);
+  std::cout << fmt::format("You reserved a {0} which costs {1} dollars.\n",
+    ticket->ToString(),
+    ticketPrice);
 }

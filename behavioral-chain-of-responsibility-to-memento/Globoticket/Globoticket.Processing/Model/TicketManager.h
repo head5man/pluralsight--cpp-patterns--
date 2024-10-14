@@ -35,5 +35,7 @@ public:
 
   // will parse the context from the expression syntax tree
   void Parse(const std::vector<std::shared_ptr<BookingExpression>>& tree, Context<int>& context);
+
+  void DisplayTicketInformation(std::shared_ptr<Ticket> ticket);
 };
 
