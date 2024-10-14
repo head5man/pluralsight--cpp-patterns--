@@ -33,7 +33,7 @@ Venue::Venue(VenueType type)
 		_numberOfDressCircleSeats = 65;
 		break;
 	default:
-		std::cout << fmt::format("The {0} venue type is not currently supported.", type);
+		std::cout << fmt::format(__FUNCTION__ " The {0} venue type is not currently supported.", type);
 		_numberOfPremiumSeats = 0;
 		_numberOfStallsSeats = 0;
 		_numberOfDressCircleSeats = 0;
@@ -57,7 +57,7 @@ int Venue::getNumberOfAvailableSeats(TicketType ticketType)
     numberOfUnbookedSeats = _numberOfDressCircleSeats - _numberOfBookedDressCircleSeats;
     break;
   default:
-    std::cout << fmt::format("The {0} ticket type is not currently supported.", ticketType);
+    std::cout << fmt::format(__FUNCTION__ " The {0} ticket type is not currently supported.", ticketType);
     return 0;
   }
   return numberOfUnbookedSeats;
@@ -77,7 +77,7 @@ int Venue::getNumberOfBookedSeats(TicketType type)
     return _numberOfBookedDressCircleSeats;
     break;
   default:
-    std::cout << fmt::format("The {0} ticket type is not currently supported.", type);
+    std::cout << fmt::format(__FUNCTION__ " The {0} ticket type is not currently supported.", type);
     return 0;
   }
 }
@@ -120,7 +120,7 @@ int Venue::UnbookSeats(int numberOfSeats, TicketType type)
     bookedPtr = &_numberOfBookedDressCircleSeats;
     break;
   default:
-    std::cout << fmt::format("The {0} ticket type is not currently supported.", type);
+    std::cout << fmt::format(__FUNCTION__ " The {0} ticket type is not currently supported.", type);
     return 0;
   }
 
@@ -149,7 +149,7 @@ int Venue::BookSeats(int numberOfSeatsToBook, TicketType ticketType)
 		numberOfBookedSeats = &_numberOfBookedDressCircleSeats;
 		break;
 	default:
-		std::cout << fmt::format("The {0} ticket type is not currently supported.", ticketType);
+		std::cout << fmt::format(__FUNCTION__ "The {0} ticket type is not currently supported.", ticketType);
 		return 0;
 	}
 
