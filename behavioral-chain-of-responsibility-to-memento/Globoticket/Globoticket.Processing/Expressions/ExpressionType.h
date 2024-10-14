@@ -7,17 +7,13 @@
 #include <algorithm>
 #include <fmt/core.h>
 
-struct ExpressionType
+struct ExpressionType;
+
+struct ExpressionType : public EnumType
 {
-  const char* _value = nullptr;
   inline ExpressionType(const char* type)
   {
-    std::string str(type);
-    _value = IsValid<ExpressionType>(str);
-    if (_value == nullptr)
-    {
-      throw std::runtime_error(fmt::format("Invalid type assignment %s", type));
-    }
+    EnumType::Initialize<ExpressionType>(type);
   }
 
 public:
@@ -32,20 +28,19 @@ public:
 
   inline operator const char* () { return _value; }
 
-  inline operator int()
+  inline operator int() const
   {
-    return IndexOf<ExpressionType>(_value);
+    return _IndexOf<ExpressionType>(_value);
   }
 
   inline ExpressionType operator=(int value)
   {
-    auto count = Count<ExpressionType>();
+    auto count = _Count<ExpressionType>();
     if (value >= 0 && value < count)
     {
       return ExpressionType(Values[value]);
     }
 
-    std::runtime_error(fmt::format("Given index(%d) is out of the bounds of array(%d)", value, count));
+    throw std::runtime_error(fmt::format("Given index(%d) is out of the bounds of array(%d)", value, count));
   }
 };
-
