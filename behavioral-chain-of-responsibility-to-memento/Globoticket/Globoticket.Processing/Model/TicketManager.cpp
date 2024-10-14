@@ -5,9 +5,11 @@
 #include "../Handlers/StallsPriceHandler.h"
 #include "../Commands/BookVenueCommand.h"
 #include "../Commands/ReserveTicketCommand.h"
+#include "../Commands/MacroCommand.h"
+#include "../Expressions/BookingExpressions.h"
+#include "../lambda/CPP20LambdaCapture.h"
 #include <iostream>
 #include <fmt/core.h>
-#include "../Commands/MacroCommand.h"
 
 TicketManager::TicketManager()
 {
@@ -149,6 +151,75 @@ void TicketManager::UndoReservation()
   command->Undo();
 }
 
+std::vector<std::shared_ptr<BookingExpression>> TicketManager::Lex(const std::string input, std::shared_ptr<Ticket> ticket)
+{
+  const char* delim = " ";
+  std::vector<std::shared_ptr<BookingExpression>> expressionTree;
+  std::locale loc;
+  std::string lowerCaseInput = "";
+  for (auto c : input)
+    lowerCaseInput += std::tolower(c);
+  
+  char* nextToken = &lowerCaseInput[0];
+
+  char* token = strtok_s(nextToken, delim, &nextToken);
+  bool startsWithAction = false;
+  try
+  {
+    while (token != nullptr)
+    {
+      if (!startsWithAction)
+      {
+        if (ActionExpression::IsValidToken(token) == false)
+        {
+          throw std::runtime_error("Invalid statement. Statement must start with an action.");
+        }
+
+        startsWithAction = true;
+        auto func = lambda_to_pointer([this](VenueType v) -> Venue* { return getVenueByVenueType(v); });
+        auto expression = std::make_shared<ActionExpression>(std::string(token), ticket, func);
+        expressionTree.push_back(expression);
+      }
+      else
+      {
+        std::string tokenString(token);
+
+        if (TicketExpression::IsValidToken(tokenString))
+        {
+          auto expression = std::make_shared<TicketExpression>(tokenString, ticket);
+          expressionTree.push_back(expression);
+        }
+        else if (VenueExpression::IsValidToken(tokenString))
+        {
+          auto expression = std::make_shared<VenueExpression>(tokenString, ticket);
+          expressionTree.push_back(expression);
+        }
+        else
+        {
+          bool isNumerical = (tokenString.find_first_not_of("01234567890") == std::string::npos);
+          if (isNumerical)
+          {
+            int tokenInt = std::stoi(tokenString);
+            auto expression = std::make_shared<SeatsExpression>(tokenString, tokenInt, ticket);
+            expressionTree.push_back(expression);
+          }
+          else
+          {
+            throw std::runtime_error("Unrecognized token");
+          }
+        }
+      }
+
+      token = strtok_s(NULL, delim, &nextToken);
+    }
+
+    return expressionTree;
+  }
+  catch (std::runtime_error&)
+  {
+    throw;
+  }
+}
 void TicketManager::TakeInteger(int& integer)
 {
 	while (true)

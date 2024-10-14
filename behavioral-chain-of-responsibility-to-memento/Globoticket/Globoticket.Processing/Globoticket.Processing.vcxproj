@@ -89,6 +89,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -117,6 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,6 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -168,12 +172,14 @@
     <ClInclude Include="Commands\ReserveTicketCommand.h" />
     <ClInclude Include="Expressions\EnumType.h" />
     <ClInclude Include="Expressions\ExpressionType.h" />
+    <ClInclude Include="Expressions\BookingExpressions.h" />
     <ClInclude Include="Expressions\SeatsExpression.h" />
     <ClInclude Include="Expressions\TicketExpression.h" />
     <ClInclude Include="Expressions\VenueExpression.h" />
     <ClInclude Include="Handlers\DressCirclePriceHandler.h" />
     <ClInclude Include="Commands\Command.h" />
     <ClInclude Include="Commands\MacroCommand.h" />
+    <ClInclude Include="lambda\CPP20LambdaCapture.h" />
     <ClInclude Include="Model\TicketManager.h" />
     <ClInclude Include="Model\Venue.h" />
     <ClInclude Include="Model\VenueType.h" />
