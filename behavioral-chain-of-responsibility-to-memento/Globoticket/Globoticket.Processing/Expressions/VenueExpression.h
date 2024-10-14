@@ -21,4 +21,9 @@ public:
   virtual std::shared_ptr<Ticket> Interpret(Context<int>& context) override;
 
   virtual int GetValue() const override;
+
+  static bool IsValidToken(std::string token)
+  {
+    return VenueTypeConverter::IsValidToken(token);
+  }
 };

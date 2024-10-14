@@ -19,5 +19,10 @@ public:
   virtual int GetValue() const override;
 
   virtual std::shared_ptr<Ticket> Interpret(Context<int>& context) override;
+
+  static bool IsValidToken(std::string token)
+  {
+    return EnumType::IsValidToken<ActionType>(token);
+  }
 };
 
