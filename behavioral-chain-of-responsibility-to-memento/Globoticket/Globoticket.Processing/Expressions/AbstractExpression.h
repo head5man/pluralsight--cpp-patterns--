@@ -21,7 +21,7 @@ protected:
   { }
   
 public:
-  virtual TVal GetValue() = 0;
+  virtual TVal GetValue() const = 0;
 
   virtual std::shared_ptr<T> Interpret(Context<TVal>& context)
   {
@@ -43,7 +43,7 @@ public:
     return _type;
   }
 
-  virtual std::string GetName() 
+  virtual std::string GetName() const
   {
     return _name;
   }
@@ -65,5 +65,3 @@ public:
     return child;
   }
 };
-
-

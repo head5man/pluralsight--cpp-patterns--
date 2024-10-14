@@ -11,10 +11,9 @@ private:
 public:
   ActionExpression(std::string name, ActionType type, std::shared_ptr<Ticket> ticket)
     : BookingExpression(name, ticket, ExpressionType::NonTerminal), _actionType(type)
-  {
+  { }
 
-  }
+  virtual int GetValue() const override;
 
-  virtual int GetValue() override;
 };
 

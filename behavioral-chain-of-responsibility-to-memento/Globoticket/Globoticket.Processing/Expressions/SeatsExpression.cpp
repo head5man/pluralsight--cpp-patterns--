@@ -7,7 +7,7 @@ std::shared_ptr<Ticket> SeatsExpression::Interpret(Context<int>& context)
   return _ticket;
 }
 
-int SeatsExpression::GetValue()
+int SeatsExpression::GetValue() const
 {
   return _numberOfSeats;
 }

@@ -16,5 +16,5 @@ public:
 
   virtual std::shared_ptr<Ticket> Interpret(Context<int>& context) override;
 
-  virtual int GetValue() override;
+  virtual int GetValue() const override;
 };

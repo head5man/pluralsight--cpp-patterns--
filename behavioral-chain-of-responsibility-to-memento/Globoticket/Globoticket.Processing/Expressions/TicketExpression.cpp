@@ -7,7 +7,7 @@ std::shared_ptr<Ticket> TicketExpression::Interpret(Context<int>& context)
   return _ticket;
 }
 
-int TicketExpression::GetValue()
+int TicketExpression::GetValue() const
 {
   return (int)_ticketType;
 }

@@ -8,7 +8,7 @@ std::shared_ptr<Ticket> VenueExpression::Interpret(Context<int>& context)
   return _ticket;
 }
 
-int VenueExpression::GetValue()
+int VenueExpression::GetValue() const
 {
   return (int)_venueType;
 }
