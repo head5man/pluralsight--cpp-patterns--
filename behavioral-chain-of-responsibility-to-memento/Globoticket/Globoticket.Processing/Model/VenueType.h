@@ -16,8 +16,9 @@ inline std::ostream& operator<<(std::ostream& os, VenueType type)
   case small:
     return os << names[type - 1];
     break;
-  // omitting default trigger compiler warning for missing
+  // omitting default to trigger compiler warning for missing cases
   }
+
   return os << type;
 }
 
@@ -27,3 +28,38 @@ inline std::string to_string(VenueType type)
   ss << type;
   return ss.str();
 }
+
+class VenueTypeConverter
+{
+public:
+  static bool IsValidToken(std::string token)
+  {
+    bool ret = false;
+    if (token == "small" || token == "large" || token == "huge")
+    {
+      ret = true;
+    }
+
+    return ret;
+  }
+
+  static VenueType FromToken(std::string token)
+  {
+    if (token == "huge")
+    {
+      return VenueType::huge;
+    }
+
+    if (token == "large")
+    {
+      return VenueType::large;
+    }
+
+    if (token == "small")
+    {
+      return VenueType::small;
+    }
+
+    throw std::runtime_error("Not a valid token(" + token + ")");
+  }
+};

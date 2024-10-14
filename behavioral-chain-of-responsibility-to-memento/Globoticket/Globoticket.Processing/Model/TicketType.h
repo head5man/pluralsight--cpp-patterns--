@@ -1,4 +1,5 @@
 #pragma once
+#include <stdexcept>
 #include <ostream>
 #include <sstream>
 
@@ -25,3 +26,38 @@ inline std::string to_string(TicketType type)
   ss << type;
   return ss.str();
 }
+
+class TicketTypeConverter
+{
+public:
+  static bool IsValidToken(std::string token)
+  {
+    bool ret = false;
+    if (token == "premium" || token == "dress" || token == "dresscircle" || token == "stalls")
+    {
+      ret = true;
+    }
+
+    return ret;
+  }
+
+  static TicketType FromToken(std::string token)
+  {
+    if (token == "premium")
+    {
+      return TicketType::premium;
+    }
+
+    if (token == "dress" || "dresscircle")
+    {
+      return TicketType::dressCircle;
+    }
+
+    if (token == "stalls")
+    {
+      return TicketType::stalls;
+    }
+
+    throw std::runtime_error("Not a valid token(" + token + ")");
+  }
+};
