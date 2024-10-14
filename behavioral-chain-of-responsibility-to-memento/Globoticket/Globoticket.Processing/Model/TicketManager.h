@@ -32,5 +32,8 @@ public:
 
   // will tokenize the input and lex the tokens into expression syntax tree
   std::vector<std::shared_ptr<BookingExpression>> Lex(const std::string input, std::shared_ptr<Ticket> ticket);
+
+  // will parse the context from the expression syntax tree
+  void Parse(const std::vector<std::shared_ptr<BookingExpression>>& tree, Context<int>& context);
 };
 

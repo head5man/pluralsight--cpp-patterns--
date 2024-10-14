@@ -220,6 +220,33 @@ std::vector<std::shared_ptr<BookingExpression>> TicketManager::Lex(const std::st
     throw;
   }
 }
+
+void TicketManager::Parse(const std::vector<std::shared_ptr<BookingExpression>>& tree, Context<int>& context)
+{
+  std::shared_ptr<BookingExpression> prev = nullptr;
+  bool firstRun = true;
+
+  for (const auto& next : tree)
+  {
+    std::string name = next->GetName();
+    int value = next->GetValue();
+
+    context.Assign(name, value);
+
+    if (!firstRun && prev->GetExpressionType() == ExpressionType::NonTerminal)
+    {
+      prev->AddChild(next);
+    }
+
+    firstRun = false;
+
+    if (next->GetExpressionType() == ExpressionType::NonTerminal)
+    {
+      prev = next;
+    }
+  }
+}
+
 void TicketManager::TakeInteger(int& integer)
 {
 	while (true)
