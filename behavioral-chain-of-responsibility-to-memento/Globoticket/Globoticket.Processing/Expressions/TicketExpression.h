@@ -9,8 +9,8 @@ class TicketExpression : public BookingExpression
 private:
   TicketType _ticketType;
 public:
-  TicketExpression(std::string name, TicketType ticketType, std::shared_ptr<Ticket> ticket)
-    : BookingExpression(name, ticket, ExpressionType::NonTerminal), _ticketType(ticketType)
+  TicketExpression(std::string name, std::shared_ptr<Ticket> ticket)
+    : BookingExpression(name, ticket, ExpressionType::NonTerminal), _ticketType(TicketTypeConverter::FromToken(name))
   {
   }
 

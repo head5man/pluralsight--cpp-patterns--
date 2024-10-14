@@ -13,13 +13,13 @@ protected:
 public:
   ~Ticket();
   Ticket(TicketType type, VenueType venueType, int numberOfSeats);
-  Ticket() = default;
+  Ticket();
 
   TicketType getTicketType() const { return _ticketType; }
   VenueType getVenueType() const { return _venueType; }
   int getNumberOfSeats() const { return _numberOfSeats; }
-  int setNumberOfSeats(int seats) { _numberOfSeats = seats; }
-  int setVenueType(int venueType) { _venueType = (VenueType)venueType; }
-  int setTicketType(int ticketType) { _ticketType = (TicketType)ticketType; }
+  int setNumberOfSeats(int seats) { _numberOfSeats = seats; return seats; }
+  int setVenueType(int venueType) { _venueType = (VenueType)venueType; return venueType; }
+  int setTicketType(int ticketType) { _ticketType = (TicketType)ticketType; return ticketType; }
 };
 

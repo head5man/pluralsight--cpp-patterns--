@@ -6,7 +6,7 @@ int Ticket::count = 0;
 
 Ticket::~Ticket()
 {
-  std::cout << "~Ticket #" << std::to_string(count--) << std::endl;
+  std::cout << "~Ticket #" << std::to_string(--count) << std::endl;
 }
 
 Ticket::Ticket(TicketType ticketType, VenueType venueType, int numberOfSeats)
@@ -16,3 +16,9 @@ Ticket::Ticket(TicketType ticketType, VenueType venueType, int numberOfSeats)
 	_venueType = venueType;
 	_numberOfSeats = numberOfSeats;
 }
+
+Ticket::Ticket()
+{
+  count++;
+}
+
