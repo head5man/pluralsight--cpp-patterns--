@@ -21,5 +21,7 @@ public:
   int setNumberOfSeats(int seats) { _numberOfSeats = seats; return seats; }
   int setVenueType(int venueType) { _venueType = (VenueType)venueType; return venueType; }
   int setTicketType(int ticketType) { _ticketType = (TicketType)ticketType; return ticketType; }
+
+  std::string ToString(const char* formatSeatsVenueArea = nullptr);
 };
 

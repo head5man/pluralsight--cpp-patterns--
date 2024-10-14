@@ -1,6 +1,7 @@
 #include "Ticket.h"
 
 #include <iostream>
+#include <fmt/core.h>
 
 int Ticket::count = 0;
 
@@ -22,3 +23,17 @@ Ticket::Ticket()
   count++;
 }
 
+std::string Ticket::ToString(const char* formatSeatsVenueArea)
+{
+  if (formatSeatsVenueArea == nullptr)
+  {
+    formatSeatsVenueArea =
+      "ticket for {0} seats "
+      "at the {1} venue "
+      "in the {2} area";
+  }
+
+  return fmt::format(
+    formatSeatsVenueArea,
+    getNumberOfSeats(), to_string(getVenueType()), to_string(getTicketType()));
+}
