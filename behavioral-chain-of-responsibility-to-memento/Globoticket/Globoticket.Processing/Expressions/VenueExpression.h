@@ -11,10 +11,9 @@ class VenueExpression : public BookingExpression
 {
 private:
   VenueType _venueType;
-  Venue* _venue;
 public:
-  VenueExpression(std::string name, VenueType venueType, Venue* venue, std::shared_ptr<Ticket> ticket)
-    : BookingExpression(name, ticket, ExpressionType::NonTerminal), _venueType(venueType), _venue(venue)
+  VenueExpression(std::string name, std::shared_ptr<Ticket> ticket)
+    : BookingExpression(ExpressionNames::VenueName, ticket, ExpressionType::NonTerminal), _venueType(VenueTypeConverter::FromToken(name))
   {
 
   }

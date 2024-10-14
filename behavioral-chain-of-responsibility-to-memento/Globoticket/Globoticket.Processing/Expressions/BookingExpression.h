@@ -4,6 +4,12 @@
 
 #include <memory>
 
+class ExpressionNames
+{
+public:
+  static constexpr const char* const VenueName = "venue";
+};
+
 class BookingExpression : public AbstractExpression<Ticket, int>
 {
 protected:
@@ -19,6 +25,5 @@ public:
   {
     _ticket.reset();
   }
-
 };
 
