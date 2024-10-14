@@ -16,7 +16,7 @@ public:
 template <typename T>
 inline Context<T>::Context()
 {
-  Values = std::unique_ptr<std::map<std::string, T>>();
+  Values = std::make_unique<std::map<std::string, T>>();
 }
 
 template <typename T>
