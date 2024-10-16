@@ -176,6 +176,7 @@
     <ClInclude Include="Expressions\SeatsExpression.h" />
     <ClInclude Include="Expressions\TicketExpression.h" />
     <ClInclude Include="Expressions\VenueExpression.h" />
+    <ClInclude Include="Iterators\FilterIterator.h" />
     <ClInclude Include="Iterators\GloboIterator.h" />
     <ClInclude Include="Iterators\Iterator.h" />
     <ClInclude Include="Iterators\GloboAggregate.h" />
