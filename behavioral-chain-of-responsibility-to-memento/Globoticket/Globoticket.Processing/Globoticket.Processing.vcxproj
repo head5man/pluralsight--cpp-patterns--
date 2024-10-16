@@ -182,6 +182,7 @@
     <ClInclude Include="Handlers\DressCirclePriceHandler.h" />
     <ClInclude Include="Commands\Command.h" />
     <ClInclude Include="Commands\MacroCommand.h" />
+    <ClInclude Include="Iterators\TicketAggregate.h" />
     <ClInclude Include="lambda\CPP20LambdaCapture.h" />
     <ClInclude Include="Model\TicketManager.h" />
     <ClInclude Include="Model\Venue.h" />

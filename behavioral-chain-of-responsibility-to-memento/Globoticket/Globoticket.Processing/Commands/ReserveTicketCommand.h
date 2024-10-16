@@ -11,7 +11,7 @@ class ReserveTicketCommand :
     public Command
 {
 private:
-  std::vector<std::shared_ptr<Ticket>>& _tickets;
+  GloboAggregate<std::shared_ptr<Ticket>>& _tickets;
   PriceHandler* _priceHandler;
   TicketType _ticketType;
   VenueType _venueType;
@@ -19,7 +19,7 @@ private:
   int _numberOfSeatsToBook;
 public:
   ~ReserveTicketCommand();
-  ReserveTicketCommand(std::vector<std::shared_ptr<Ticket>>& tickets, PriceHandler* priceHandler, TicketType ticketType, VenueType venueType, int numberOfSeatsToBook);
+  ReserveTicketCommand(TicketAggregate& tickets, PriceHandler* priceHandler, TicketType ticketType, VenueType venueType, int numberOfSeatsToBook);
   virtual bool Execute() override;
   virtual void Undo() override;
 };

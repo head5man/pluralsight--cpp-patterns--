@@ -1,4 +1,5 @@
 #include "PriceHandler.h"
+
 #include <iostream>
 
 PriceHandler* PriceHandler::SetNext(PriceReceiver* receiver)
@@ -19,12 +20,12 @@ double PriceHandler::HandlePrice(const Ticket& ticket)
   return NULL;
 }
 
-double PriceHandler::HandleTotalPrice(const std::vector<std::shared_ptr<Ticket>>& tickets)
+double PriceHandler::HandleTotalPrice(TicketIterator& it)
 {
   double totalPrice = 0;
-
-  for (auto const& ticket : tickets)
+  for (it.First(); it.IsDone() == false; it.Next())
   {
+    auto ticket = *it.CurrentItem();
     totalPrice += HandlePrice(*ticket);
   }
   return totalPrice;

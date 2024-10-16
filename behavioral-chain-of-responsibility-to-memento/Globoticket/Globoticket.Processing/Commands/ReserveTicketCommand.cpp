@@ -17,7 +17,7 @@ bool ReserveTicketCommand::Execute()
       "at the {1} venue in the {2} area which costs {3} dollars. \n",
       _ticket->getNumberOfSeats(), to_string(_ticket->getVenueType()), to_string(_ticket->getTicketType()),
       ticketPrice);
-    _tickets.push_back(_ticket);
+    _tickets.Push(_ticket);
   }
   return canExecute;
 }
@@ -33,7 +33,7 @@ void ReserveTicketCommand::Undo()
   double ticketPrice = _priceHandler->HandlePrice(*_ticket);
 
   // delete last ticket
-  _tickets.pop_back();
+  _tickets.Pop();
 
   std::cout << fmt::format("You undid reserved a ticket for {0} seats "
     "at the {1} venue in the {2} area which costs {3} dollars. \n",
@@ -48,7 +48,7 @@ ReserveTicketCommand::~ReserveTicketCommand()
     _ticket.reset();
 }
 
-ReserveTicketCommand::ReserveTicketCommand(std::vector<std::shared_ptr<Ticket>>& tickets, PriceHandler* priceHandler, TicketType ticketType, VenueType venueType, int numberOfSeatsToBook)
+ReserveTicketCommand::ReserveTicketCommand(TicketAggregate& tickets, PriceHandler* priceHandler, TicketType ticketType, VenueType venueType, int numberOfSeatsToBook)
   : Command(),
   _tickets(tickets),
   _priceHandler(priceHandler),

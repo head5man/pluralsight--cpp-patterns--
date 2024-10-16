@@ -4,6 +4,7 @@
 #include "../Handlers/PriceHandler.h"
 #include "../Commands/Command.h"
 #include "../Expressions/BookingExpression.h"
+#include "../Iterators/TicketAggregate.h"
 
 #include <vector>
 #include <stack>
@@ -12,7 +13,7 @@
 class TicketManager
 {
 private:
-	std::vector<std::shared_ptr<Ticket>> _tickets;
+  TicketAggregate _tickets;
   std::stack<std::unique_ptr<Command>> _commands;
 	PriceHandler* _priceHandler;
 	Venue* _hugeTheatre;

@@ -105,16 +105,18 @@ Venue* TicketManager::getVenueByVenueType(VenueType venueType)
 
 void TicketManager::HandleTotalPrice()
 {
-	double totalPrice = _priceHandler->HandleTotalPrice(_tickets);
+  auto it = _tickets.CreateIterator();
+	double totalPrice = _priceHandler->HandleTotalPrice(*it);
 	int totalNumberOfSeats = 0;
-	for (auto const& ticket : _tickets)
+  for (it->First(); it->IsDone() == false; it->Next())
 	{
+    auto ticket = *it->CurrentItem();
 		totalNumberOfSeats += ticket->getNumberOfSeats();
 	}
 
 	std::cout << fmt::format("You reserved a total {0} tickets for {1} seats "
 		"with a total cost of {2} dollars. \n",
-		_tickets.size(),
+		_tickets.Count(),
 		totalNumberOfSeats,
 		totalPrice);
 }
@@ -141,7 +143,7 @@ void TicketManager::HandleFreeText()
 
       if (actionType == ActionType::Reserve)
       {
-        _tickets.push_back(ticket);
+        _tickets.Push(ticket);
         DisplayTicketInformation(ticket);
       }
     }
@@ -154,7 +156,7 @@ void TicketManager::HandleFreeText()
 
 void TicketManager::ClearTickets()
 {
-	_tickets.clear();
+	_tickets.Clear();
   while (_commands.size() > 0)
   {
     auto cmd = std::move(_commands.top());
@@ -180,8 +182,10 @@ void TicketManager::ListAllTickets()
 {
   std::cout << "Venue\tType of seats\tNumber of seats\tPrice\n";
   std::cout << "------\t------\t\t------\t\t------\n";
-  for (auto& ticket : _tickets)
+  auto it = _tickets.CreateIterator();
+  for (it->First(); it->IsDone() == false; it->Next())
   {
+    auto ticket = *(it->CurrentItem());
     double price = _priceHandler->HandlePrice(*ticket);
     auto str = ticket->ToString("{1:8}{2:16}{0:<16}");
     std::cout << fmt::format("{0}{1}\n",

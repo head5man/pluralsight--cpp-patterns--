@@ -1,6 +1,7 @@
 #pragma once
 #include "../Model/Ticket.h"
 #include "PriceReceiver.h"
+#include "../Iterators/TicketAggregate.h"
 
 #include <vector>
 
@@ -12,6 +13,6 @@ public:
   virtual PriceHandler* SetNext(PriceReceiver* receiver);
 
   double HandlePrice(const Ticket& ticket);
-  double HandleTotalPrice(const std::vector<std::shared_ptr<Ticket>>& tickets);
+  double HandleTotalPrice(TicketIterator& tickets);
 };
 
