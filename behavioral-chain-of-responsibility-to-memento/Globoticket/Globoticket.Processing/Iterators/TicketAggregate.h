@@ -5,6 +5,10 @@
 
 #include <memory>
 
-typedef GloboAggregate<std::shared_ptr<Ticket>> TicketAggregate;
+typedef std::shared_ptr<Ticket> ItemType;
 
-typedef Iterator<std::shared_ptr<Ticket>, TicketAggregate> TicketIterator;
+typedef GloboAggregate<ItemType> TicketAggregate;
+
+typedef Iterator<ItemType, TicketAggregate> TicketIterator;
+
+typedef TicketAggregate::ItemContainer MediatedType;

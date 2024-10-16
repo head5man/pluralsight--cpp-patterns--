@@ -11,8 +11,10 @@ class GloboAggregate
 {
   friend class GloboIterator<Item, GloboAggregate>;
   friend class FilterIterator<Item, GloboAggregate>;
+public:
+  typedef std::vector<Item> ItemContainer;
 private:
-  std::vector<Item> _items;
+  ItemContainer _items;
 public:
   void Push(Item item)
   {
@@ -50,5 +52,7 @@ public:
   {
     return std::make_shared<FilterIterator<Item, GloboAggregate<Item>>>(*this, predicate);
   }
+
+  operator ItemContainer&() { return _items; }
 };
 

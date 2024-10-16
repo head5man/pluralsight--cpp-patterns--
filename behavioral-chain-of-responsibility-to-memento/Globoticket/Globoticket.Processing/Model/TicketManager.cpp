@@ -27,7 +27,7 @@ namespace {
     }
   }
 
-  void TakeInteger(int& integer)
+  void TakeInteger(int& integer, int maxNumber = 0)
   {
     while (true)
     {
@@ -37,6 +37,13 @@ namespace {
       if (!std::cin)
       {
         std::cout << "Please enter an integer number " << std::endl;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        continue;
+      }
+      else if (maxNumber > 0 && integer > maxNumber)
+      {
+        std::cout << "Please enter an integer number that is no higher than " << maxNumber << std::endl;
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         continue;
@@ -84,6 +91,9 @@ TicketManager::TicketManager()
     ->SetNext(dcPriceHandler)
     ->SetNext(sPriceHandler)
     ->SetNext(pPriceHandler);
+
+  _notificationMediator = std::make_unique<NotificationMediator>();
+  _notificationMediator->CreateNotifiers(_tickets);
 }
 
 void TicketManager::BookSeats()
@@ -240,6 +250,15 @@ void TicketManager::ListAllTicketsBySeatType()
   }
 }
 
+void TicketManager::NotifyPrinting()
+{
+  _notificationMediator->CallNotifier(NotificationType::printing);
+}
+
+void TicketManager::NotifyAccounting()
+{
+  _notificationMediator->CallNotifier(NotificationType::accounting);
+}
 
 
 std::vector<std::shared_ptr<BookingExpression>> TicketManager::Lex(const std::string input, std::shared_ptr<Ticket> ticket)

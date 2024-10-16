@@ -5,6 +5,7 @@
 #include "../Commands/Command.h"
 #include "../Expressions/BookingExpression.h"
 #include "../Iterators/TicketAggregate.h"
+#include "../Mediators/NotificationMediator.h"
 
 #include <vector>
 #include <stack>
@@ -15,6 +16,7 @@ class TicketManager
 private:
   TicketAggregate _tickets;
   std::stack<std::unique_ptr<Command>> _commands;
+  std::unique_ptr<NotificationMediator> _notificationMediator;
   PriceHandler* _priceHandler;
   Venue* _hugeTheatre;
   Venue* _largeTheatre;
@@ -31,6 +33,9 @@ public:
   void UndoReservation();
   void ListAllTickets();
   void ListAllTicketsBySeatType();
+
+  void NotifyPrinting();
+  void NotifyAccounting();
 
   // will tokenize the input and lex the tokens into expression syntax tree
   std::vector<std::shared_ptr<BookingExpression>> Lex(const std::string input, std::shared_ptr<Ticket> ticket);

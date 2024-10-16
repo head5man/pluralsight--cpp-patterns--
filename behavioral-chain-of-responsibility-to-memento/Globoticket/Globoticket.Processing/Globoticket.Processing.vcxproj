@@ -144,6 +144,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Business\Accounting.cpp" />
+    <ClCompile Include="Business\Printing.cpp" />
     <ClCompile Include="Expressions\ActionExpression.cpp" />
     <ClCompile Include="Expressions\BookingExpression.cpp" />
     <ClCompile Include="Commands\BookVenueCommand.cpp" />
@@ -161,8 +163,11 @@
     <ClCompile Include="Globoticket.Processing.cpp" />
     <ClCompile Include="Model\TicketManager.cpp" />
     <ClCompile Include="Model\Venue.cpp" />
+    <ClCompile Include="Mediators\NotificationMediator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Business\Accounting.h" />
+    <ClInclude Include="Business\Printing.h" />
     <ClInclude Include="Expressions\ActionExpression.h" />
     <ClInclude Include="Expressions\ActionType.h" />
     <ClInclude Include="Expressions\Context.h" />
@@ -176,6 +181,7 @@
     <ClInclude Include="Expressions\SeatsExpression.h" />
     <ClInclude Include="Expressions\TicketExpression.h" />
     <ClInclude Include="Expressions\VenueExpression.h" />
+    <ClInclude Include="Mediators\GloboMediator.h" />
     <ClInclude Include="Iterators\FilterIterator.h" />
     <ClInclude Include="Iterators\GloboIterator.h" />
     <ClInclude Include="Iterators\Iterator.h" />
@@ -185,9 +191,12 @@
     <ClInclude Include="Commands\MacroCommand.h" />
     <ClInclude Include="Iterators\TicketAggregate.h" />
     <ClInclude Include="lambda\CPP20LambdaCapture.h" />
+    <ClInclude Include="Mediators\NotificationType.h" />
     <ClInclude Include="Model\TicketManager.h" />
     <ClInclude Include="Model\Venue.h" />
     <ClInclude Include="Model\VenueType.h" />
+    <ClInclude Include="Mediators\Notifier.h" />
+    <ClInclude Include="Mediators\NotificationMediator.h" />
     <ClInclude Include="Templates\Handler.h" />
     <ClInclude Include="Handlers\PriceReceiver.h" />
     <ClInclude Include="Handlers\StallsPriceHandler.h" />
