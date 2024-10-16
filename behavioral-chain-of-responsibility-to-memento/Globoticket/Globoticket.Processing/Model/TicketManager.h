@@ -29,6 +29,7 @@ public:
   void HandleFreeText();
 	void ClearTickets();
   void UndoReservation();
+  void ListAllTickets();
 
   // will tokenize the input and lex the tokens into expression syntax tree
   std::vector<std::shared_ptr<BookingExpression>> Lex(const std::string input, std::shared_ptr<Ticket> ticket);

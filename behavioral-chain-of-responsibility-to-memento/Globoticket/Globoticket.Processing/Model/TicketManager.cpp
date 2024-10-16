@@ -123,24 +123,27 @@ void TicketManager::HandleFreeText()
 {
   try
   {
-    std::cout << "Enter expression - {action} {number} {venue} {ticket type}\n";
-    std::string expression;
-    TakeExpression(expression);
-    std::cout << "<- " << expression << std::endl;
-    auto expressionTree = Lex(expression, std::make_shared<Ticket>());
-    if (expressionTree.empty())
-      return;
-    Context<int> context;
-    Parse(expressionTree, context);
-
-    auto action = expressionTree.front();
-    auto ticket = action->Interpret(context);
-    ActionType actionType = action->GetValue();
-
-    if (actionType == ActionType::Reserve)
+    while (true)
     {
-      _tickets.push_back(ticket);
-      DisplayTicketInformation(ticket);
+      std::cout << "Enter expression - {action} {number} {venue} {ticket type}\n";
+      std::string expression;
+      TakeExpression(expression);
+      std::cout << "<- " << expression << std::endl;
+      auto expressionTree = Lex(expression, std::make_shared<Ticket>());
+      if (expressionTree.empty())
+        return;
+      Context<int> context;
+      Parse(expressionTree, context);
+
+      auto action = expressionTree.front();
+      auto ticket = action->Interpret(context);
+      ActionType actionType = action->GetValue();
+
+      if (actionType == ActionType::Reserve)
+      {
+        _tickets.push_back(ticket);
+        DisplayTicketInformation(ticket);
+      }
     }
   }
   catch (std::runtime_error& e)
@@ -171,6 +174,20 @@ void TicketManager::UndoReservation()
   auto command = std::move(_commands.top());
   _commands.pop();
   command->Undo();
+}
+
+void TicketManager::ListAllTickets()
+{
+  std::cout << "Venue\tType of seats\tNumber of seats\tPrice\n";
+  std::cout << "------\t------\t\t------\t\t------\n";
+  for (auto& ticket : _tickets)
+  {
+    double price = _priceHandler->HandlePrice(*ticket);
+    auto str = ticket->ToString("{1:8}{2:16}{0:<16}");
+    std::cout << fmt::format("{0}{1}\n",
+      str,
+      price);
+  }
 }
 
 std::vector<std::shared_ptr<BookingExpression>> TicketManager::Lex(const std::string input, std::shared_ptr<Ticket> ticket)

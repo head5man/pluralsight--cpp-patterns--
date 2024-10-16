@@ -48,7 +48,7 @@ public:
       return TicketType::premium;
     }
 
-    if (token == "dress" || "dresscircle")
+    if (token == "dress" || token == "dresscircle")
     {
       return TicketType::dressCircle;
     }
