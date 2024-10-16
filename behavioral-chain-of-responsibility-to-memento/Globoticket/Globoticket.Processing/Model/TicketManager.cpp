@@ -13,59 +13,59 @@
 
 TicketManager::TicketManager()
 {
-	// Setup venues
-	_hugeTheatre = new Venue(huge);
-	_largeTheatre = new Venue(large);
-	_smallTheatre = new Venue(small);
+  // Setup venues
+  _hugeTheatre = new Venue(huge);
+  _largeTheatre = new Venue(large);
+  _smallTheatre = new Venue(small);
 
-	// Setup price handling chain
-	_priceHandler = new PriceHandler;
-	DressCirclePriceHandler* dcPriceHandler = new DressCirclePriceHandler;
-	StallsPriceHandler* sPriceHandler = new StallsPriceHandler;
-	PremiumPriceHandler* pPriceHandler = new PremiumPriceHandler;
+  // Setup price handling chain
+  _priceHandler = new PriceHandler;
+  DressCirclePriceHandler* dcPriceHandler = new DressCirclePriceHandler;
+  StallsPriceHandler* sPriceHandler = new StallsPriceHandler;
+  PremiumPriceHandler* pPriceHandler = new PremiumPriceHandler;
 
-	_priceHandler
-		->SetNext(dcPriceHandler)
-		->SetNext(sPriceHandler)
-		->SetNext(pPriceHandler);
+  _priceHandler
+    ->SetNext(dcPriceHandler)
+    ->SetNext(sPriceHandler)
+    ->SetNext(pPriceHandler);
 }
 
 void TicketManager::BookSeats()
 {
-	int numberOfSeatsToBook;
-	std::cout << fmt::format("How many seats would you like to reserve?\n");
+  int numberOfSeatsToBook;
+  std::cout << fmt::format("How many seats would you like to reserve?\n");
 
-	TakeInteger(numberOfSeatsToBook);
+  TakeInteger(numberOfSeatsToBook);
 
-	int typeOfTicketInt = 0;
+  int typeOfTicketInt = 0;
 
-	while (typeOfTicketInt < 1 || typeOfTicketInt > 3)
-	{
-		std::cout << fmt::format("Which type of ticket would you "
-			"like to reserve?\n");
-		std::cout << fmt::format("1: Premium\n");
-		std::cout << fmt::format("2: Stalls\n");
-		std::cout << fmt::format("3: Dress Circle\n");
+  while (typeOfTicketInt < 1 || typeOfTicketInt > 3)
+  {
+    std::cout << fmt::format("Which type of ticket would you "
+      "like to reserve?\n");
+    std::cout << fmt::format("1: Premium\n");
+    std::cout << fmt::format("2: Stalls\n");
+    std::cout << fmt::format("3: Dress Circle\n");
 
-		TakeInteger(typeOfTicketInt);
-	}
+    TakeInteger(typeOfTicketInt);
+  }
 
-	int typeOfVenueInt = 0;
+  int typeOfVenueInt = 0;
 
-	while (typeOfVenueInt < 1 || typeOfVenueInt > 3)
-	{
-		std::cout << fmt::format("At what type of venue would you "
-			"like to reserve?\n");
-		std::cout << fmt::format("1: Huge\n");
-		std::cout << fmt::format("2: Large\n");
-		std::cout << fmt::format("3: Small\n");
+  while (typeOfVenueInt < 1 || typeOfVenueInt > 3)
+  {
+    std::cout << fmt::format("At what type of venue would you "
+      "like to reserve?\n");
+    std::cout << fmt::format("1: Huge\n");
+    std::cout << fmt::format("2: Large\n");
+    std::cout << fmt::format("3: Small\n");
 
-		TakeInteger(typeOfVenueInt);
-	}
+    TakeInteger(typeOfVenueInt);
+  }
 
-	TicketType ticketType = (TicketType)typeOfTicketInt;
-	VenueType venueType = (VenueType)typeOfVenueInt;
-	int numberOfRemainingSeats = 0;
+  TicketType ticketType = (TicketType)typeOfTicketInt;
+  VenueType venueType = (VenueType)typeOfVenueInt;
+  int numberOfRemainingSeats = 0;
 
   try
   {
@@ -106,19 +106,19 @@ Venue* TicketManager::getVenueByVenueType(VenueType venueType)
 void TicketManager::HandleTotalPrice()
 {
   auto it = _tickets.CreateIterator();
-	double totalPrice = _priceHandler->HandleTotalPrice(*it);
-	int totalNumberOfSeats = 0;
+  double totalPrice = _priceHandler->HandleTotalPrice(*it);
+  int totalNumberOfSeats = 0;
   for (it->First(); it->IsDone() == false; it->Next())
-	{
+  {
     auto ticket = *it->CurrentItem();
-		totalNumberOfSeats += ticket->getNumberOfSeats();
-	}
+    totalNumberOfSeats += ticket->getNumberOfSeats();
+  }
 
-	std::cout << fmt::format("You reserved a total {0} tickets for {1} seats "
-		"with a total cost of {2} dollars. \n",
-		_tickets.Count(),
-		totalNumberOfSeats,
-		totalPrice);
+  std::cout << fmt::format("You reserved a total {0} tickets for {1} seats "
+    "with a total cost of {2} dollars. \n",
+    _tickets.Count(),
+    totalNumberOfSeats,
+    totalPrice);
 }
 
 void TicketManager::HandleFreeText()
@@ -156,13 +156,13 @@ void TicketManager::HandleFreeText()
 
 void TicketManager::ClearTickets()
 {
-	_tickets.Clear();
+  _tickets.Clear();
   while (_commands.size() > 0)
   {
     auto cmd = std::move(_commands.top());
     _commands.pop();
   }
-	std:: cout << "All ticket reservations have been cleared.\n";
+  std:: cout << "All ticket reservations have been cleared.\n";
 }
 
 void TicketManager::UndoReservation()
@@ -292,20 +292,20 @@ void TicketManager::Parse(const std::vector<std::shared_ptr<BookingExpression>>&
 
 void TicketManager::TakeInteger(int& integer)
 {
-	while (true)
-	{
-		std::cin >> integer;
+  while (true)
+  {
+    std::cin >> integer;
 
-		// Check that the user entered an integer
-		if (!std::cin)
-		{
-			std::cout << "Please enter an integer number " << std::endl;
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			continue;
-		}
-		else break;
-	}
+    // Check that the user entered an integer
+    if (!std::cin)
+    {
+      std::cout << "Please enter an integer number " << std::endl;
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      continue;
+    }
+    else break;
+  }
 }
 
 void TicketManager::TakeExpression(std::string& expression)

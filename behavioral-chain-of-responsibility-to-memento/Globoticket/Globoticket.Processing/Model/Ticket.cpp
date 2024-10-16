@@ -13,9 +13,9 @@ Ticket::~Ticket()
 Ticket::Ticket(TicketType ticketType, VenueType venueType, int numberOfSeats)
 {
   count++;
-	_ticketType = ticketType;
-	_venueType = venueType;
-	_numberOfSeats = numberOfSeats;
+  _ticketType = ticketType;
+  _venueType = venueType;
+  _numberOfSeats = numberOfSeats;
 }
 
 Ticket::Ticket()

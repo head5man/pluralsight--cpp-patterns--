@@ -15,20 +15,20 @@ class TicketManager
 private:
   TicketAggregate _tickets;
   std::stack<std::unique_ptr<Command>> _commands;
-	PriceHandler* _priceHandler;
-	Venue* _hugeTheatre;
-	Venue* _largeTheatre;
-	Venue* _smallTheatre;
-	void TakeInteger(int& integer);
+  PriceHandler* _priceHandler;
+  Venue* _hugeTheatre;
+  Venue* _largeTheatre;
+  Venue* _smallTheatre;
+  void TakeInteger(int& integer);
   void TakeExpression(std::string& expression);
   Venue* getVenueByVenueType(VenueType venueType);
 
 public:
-	TicketManager();
-	void BookSeats();
-	void HandleTotalPrice();
+  TicketManager();
+  void BookSeats();
+  void HandleTotalPrice();
   void HandleFreeText();
-	void ClearTickets();
+  void ClearTickets();
   void UndoReservation();
   void ListAllTickets();
 

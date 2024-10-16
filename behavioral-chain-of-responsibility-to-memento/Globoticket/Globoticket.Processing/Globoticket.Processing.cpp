@@ -13,36 +13,36 @@ using namespace std;
 TicketManager* _ticketManager;
 int main()
 {
-	_ticketManager = new TicketManager;
-	SystemMenu();
+  _ticketManager = new TicketManager;
+  SystemMenu();
 }
 
 void SystemMenu()
 {
-	char selection = ' ';
+  char selection = ' ';
 
-	do
-	{
-		switch (selection)
-		{
-		case '1':
-		{
-			_ticketManager->BookSeats();
-			break;
-		}
+  do
+  {
+    switch (selection)
+    {
+    case '1':
+    {
+      _ticketManager->BookSeats();
+      break;
+    }
     case '5':
       _ticketManager->HandleFreeText();
       break;
-		case 't':
-		{
-			_ticketManager->HandleTotalPrice();
-			break;
-		}
-		case 'c':
-		{
-			_ticketManager->ClearTickets();
-			break;
-		}
+    case 't':
+    {
+      _ticketManager->HandleTotalPrice();
+      break;
+    }
+    case 'c':
+    {
+      _ticketManager->ClearTickets();
+      break;
+    }
     case 'u':
     {
       _ticketManager->UndoReservation();
@@ -67,10 +67,10 @@ void SystemMenu()
       break;
     case 'q':
       break;
-		default:
-			cout << "Please make a valid selection.\n";
-			break;
-		}
+    default:
+      cout << "Please make a valid selection.\n";
+      break;
+    }
   } while (GetSelection(selection) && selection != 'q');
 }
 
