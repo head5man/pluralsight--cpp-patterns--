@@ -94,6 +94,7 @@ TicketManager::TicketManager()
 
   _notificationMediator = std::make_unique<NotificationMediator>();
   _notificationMediator->CreateNotifiers(_tickets);
+  _colorChanger.ChangeConsoleColor(_userSettings.GetColorSetting());
 }
 
 void TicketManager::BookSeats()
@@ -260,6 +261,41 @@ void TicketManager::NotifyAccounting()
   _notificationMediator->CallNotifier(NotificationType::accounting);
 }
 
+void TicketManager::SetColor()
+{
+  std::cout << "Please enter an integer [1,255] to select the console color" << std::endl;
+  int selection;
+  TakeInteger(selection, 255);
+  _undoStack.push(_userSettings.CreateMemento());
+  while (!_redoStack.empty())
+  {
+    _redoStack.pop();
+  }
+
+  _userSettings.SetColorSetting(selection);
+  _colorChanger.ChangeConsoleColor(selection);
+
+  std::cout << "Your console color was sucessfully changed.\n";
+}
+
+void TicketManager::UndoColor(bool redo)
+{
+  std::stack<std::shared_ptr<UserSettingsMemento>>& forward = redo == false ? _undoStack : _redoStack;
+  std::stack<std::shared_ptr<UserSettingsMemento>>& back = redo ? _undoStack : _redoStack;
+
+  if (forward.empty())
+  {
+    std::cout << "Nothing to " << (redo ? "redo" : "undo") << ".\n";
+    return;
+  }
+  back.push(_userSettings.CreateMemento());
+  auto memento = forward.top();
+  _userSettings.SetMemento(memento);
+  forward.pop();
+  _colorChanger.ChangeConsoleColor(_userSettings.GetColorSetting());
+
+  std::cout << "Your console color was sucessfully " << (redo ? "redone" : "undone") << ".\n";
+}
 
 std::vector<std::shared_ptr<BookingExpression>> TicketManager::Lex(const std::string input, std::shared_ptr<Ticket> ticket)
 {

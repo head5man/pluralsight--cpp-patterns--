@@ -68,6 +68,21 @@ void SystemMenu()
       _ticketManager->NotifyPrinting();
       break;
     }
+    case 's':
+    {
+      _ticketManager->SetColor();
+      break;
+    }
+    case 'v':
+    {
+      _ticketManager->UndoColor();
+      break;
+    }
+    case 'r':
+    {
+      _ticketManager->UndoColor(true);
+      break;
+    }
     case -1:
     case ' ':
       cout << fmt::format("Welcome to the Globoticket system\n");
@@ -78,6 +93,9 @@ void SystemMenu()
       cout << "F: List tickets by seat type\n";
       cout << "A: Notify accounting\n";
       cout << "P: Notify printing\n";
+      cout << "S: Set color\n";
+      cout << "V: Undo color\n";
+      cout << "R: Redo color\n";
       cout << fmt::format("T: Calculate total price of current tickets\n");
       cout << fmt::format("C: Clear ticket list\n");
       cout << fmt::format("U: Undo last reservation\n");
