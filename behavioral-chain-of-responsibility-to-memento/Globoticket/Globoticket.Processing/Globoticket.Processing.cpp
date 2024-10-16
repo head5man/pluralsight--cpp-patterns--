@@ -53,6 +53,11 @@ void SystemMenu()
       _ticketManager->ListAllTickets();
       break;
     }
+    case 'f':
+    {
+      _ticketManager->ListAllTicketsBySeatType();
+      break;
+    }
     case -1:
     case ' ':
       cout << fmt::format("Welcome to the Globoticket system\n");
@@ -60,6 +65,7 @@ void SystemMenu()
       cout << fmt::format("1: Make ticket reservation\n");
       cout << fmt::format("5: Reserve ticket expression\n");
       cout << "L: List all tickets\n";
+      cout << "F: List tickets by seat type\n";
       cout << fmt::format("T: Calculate total price of current tickets\n");
       cout << fmt::format("C: Clear ticket list\n");
       cout << fmt::format("U: Undo last reservation\n");

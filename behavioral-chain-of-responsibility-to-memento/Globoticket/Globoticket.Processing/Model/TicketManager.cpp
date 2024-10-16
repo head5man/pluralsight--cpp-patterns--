@@ -11,6 +11,62 @@
 #include <iostream>
 #include <fmt/core.h>
 
+namespace {
+  void ShowTickets(std::shared_ptr<TicketIterator> it, PriceHandler* priceHandler)
+  {
+    std::cout << "Venue\tType of seats\tNumber of seats\tPrice\n";
+    std::cout << "------\t------\t\t------\t\t------\n";
+    for (it->First(); it->IsDone() == false; it->Next())
+    {
+      auto ticket = *(it->CurrentItem());
+      double price = priceHandler->HandlePrice(*ticket);
+      auto str = ticket->ToString("{1:8}{2:16}{0:<16}");
+      std::cout << fmt::format("{0}{1}\n",
+        str,
+        price);
+    }
+  }
+
+  void TakeInteger(int& integer)
+  {
+    while (true)
+    {
+      std::cin >> integer;
+
+      // Check that the user entered an integer
+      if (!std::cin)
+      {
+        std::cout << "Please enter an integer number " << std::endl;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        continue;
+      }
+      else break;
+    }
+  }
+
+  int TakeTicketType(const char* postfix = "reserve?", bool exitZero = false, const char* querybody =
+    "Which type of ticket would you like to"
+    )
+  {
+    int typeOfTicketInt = -1;
+
+    while (typeOfTicketInt < (exitZero ? 0 : 1) || typeOfTicketInt > 3)
+    {
+      std::cout << fmt::format("{0} {1}\n", querybody, postfix);
+      std::cout << (exitZero ? "0: Exit\n" : "");
+      std::cout << fmt::format("1: Premium\n");
+      std::cout << fmt::format("2: Stalls\n");
+      std::cout << fmt::format("3: Dress Circle\n");
+
+      TakeInteger(typeOfTicketInt);
+    }
+
+    return typeOfTicketInt;
+  }
+
+}
+
 TicketManager::TicketManager()
 {
   // Setup venues
@@ -37,18 +93,7 @@ void TicketManager::BookSeats()
 
   TakeInteger(numberOfSeatsToBook);
 
-  int typeOfTicketInt = 0;
-
-  while (typeOfTicketInt < 1 || typeOfTicketInt > 3)
-  {
-    std::cout << fmt::format("Which type of ticket would you "
-      "like to reserve?\n");
-    std::cout << fmt::format("1: Premium\n");
-    std::cout << fmt::format("2: Stalls\n");
-    std::cout << fmt::format("3: Dress Circle\n");
-
-    TakeInteger(typeOfTicketInt);
-  }
+  int typeOfTicketInt = TakeTicketType();
 
   int typeOfVenueInt = 0;
 
@@ -180,19 +225,22 @@ void TicketManager::UndoReservation()
 
 void TicketManager::ListAllTickets()
 {
-  std::cout << "Venue\tType of seats\tNumber of seats\tPrice\n";
-  std::cout << "------\t------\t\t------\t\t------\n";
   auto it = _tickets.CreateIterator();
-  for (it->First(); it->IsDone() == false; it->Next())
+  ShowTickets(it, _priceHandler);
+}
+
+void TicketManager::ListAllTicketsBySeatType()
+{
+  while (int selection = TakeTicketType("list tickets for?", true))
   {
-    auto ticket = *(it->CurrentItem());
-    double price = _priceHandler->HandlePrice(*ticket);
-    auto str = ticket->ToString("{1:8}{2:16}{0:<16}");
-    std::cout << fmt::format("{0}{1}\n",
-      str,
-      price);
+    if (selection <= 0)
+      break;
+    auto it = _tickets.CreateFilterIterator([selection](std::shared_ptr<Ticket> ticket) { return ticket->getTicketType() == selection; });
+    ShowTickets(it, _priceHandler);
   }
 }
+
+
 
 std::vector<std::shared_ptr<BookingExpression>> TicketManager::Lex(const std::string input, std::shared_ptr<Ticket> ticket)
 {
@@ -287,24 +335,6 @@ void TicketManager::Parse(const std::vector<std::shared_ptr<BookingExpression>>&
     {
       prev = next;
     }
-  }
-}
-
-void TicketManager::TakeInteger(int& integer)
-{
-  while (true)
-  {
-    std::cin >> integer;
-
-    // Check that the user entered an integer
-    if (!std::cin)
-    {
-      std::cout << "Please enter an integer number " << std::endl;
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-      continue;
-    }
-    else break;
   }
 }
 

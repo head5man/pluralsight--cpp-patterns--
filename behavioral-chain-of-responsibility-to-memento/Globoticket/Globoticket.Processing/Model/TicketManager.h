@@ -19,7 +19,6 @@ private:
   Venue* _hugeTheatre;
   Venue* _largeTheatre;
   Venue* _smallTheatre;
-  void TakeInteger(int& integer);
   void TakeExpression(std::string& expression);
   Venue* getVenueByVenueType(VenueType venueType);
 
@@ -31,6 +30,7 @@ public:
   void ClearTickets();
   void UndoReservation();
   void ListAllTickets();
+  void ListAllTicketsBySeatType();
 
   // will tokenize the input and lex the tokens into expression syntax tree
   std::vector<std::shared_ptr<BookingExpression>> Lex(const std::string input, std::shared_ptr<Ticket> ticket);
