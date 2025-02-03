@@ -11,7 +11,7 @@ public:
   }
 };
 
-class RowbustCoffee : public Coffee
+class RobustCoffee : public Coffee
 {
 public:
   void stir() override
@@ -50,6 +50,6 @@ std::unique_ptr<CoffeeMachine> RobustCoffeeFactory::createMachine() {
 }
 
 std::unique_ptr<Coffee> RobustCoffeeFactory::createCoffee() {
-  return std::make_unique<RowbustCoffee>();
+  return std::make_unique<RobustCoffee>();
 }
 
