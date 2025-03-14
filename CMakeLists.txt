@@ -13,3 +13,7 @@ project ("patterns")
 
 # Include sub-projects.
 add_subdirectory ("advanced-creational-patterns")
+
+add_subdirectory("utils")
+
+add_subdirectory("type-erasure")
